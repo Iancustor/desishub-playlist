@@ -13,13 +13,16 @@ import { PodcastEmptyPlaceholder } from "@/components/podcast-empty-placeholder"
 import { Sidebar } from "@/components/sidebar";
 import { listenNowAlbums, madeForYouAlbums } from "@/data/albums";
 import { playlists } from "@/data/playlists";
+import Link from "next/link";
+import Player from "@/components/Player";
 
 export const metadata: Metadata = {
-  title: "Music App",
-  description: "Example music app using the components.",
+  title: "Desishub Playlist",
+  description: "DesisHub music app for Student Playlists.",
 };
 
 export default function MusicPage() {
+  const playList = madeForYouAlbums.slice(1, 4);
   return (
     <>
       <div className="md:hidden">
@@ -62,6 +65,43 @@ export default function MusicPage() {
                           <PlusCircledIcon className="mr-2 h-4 w-4" />
                           Add music
                         </Button>
+                      </div>
+                    </div>
+                    <div className="flex">
+                      <div className="w-[65vw] ">
+                        <div className="w-[100%] h-[80vh] rounded-md">
+                          <Player />
+                        </div>
+                      </div>
+                      <div className="w-[45vw] flex flex-col gap-2">
+                        <h2 className="font-bold ">PLAY LIST</h2>
+                        <div className="flex flex-col gap-2">
+                          {playList.map((album, i) => {
+                            return (
+                              <Link href="/">
+                                <div
+                                  key={i}
+                                  className="flex gap-3 items-center hover:animate-pulse"
+                                >
+                                  <Image
+                                    src={album.cover}
+                                    alt=""
+                                    width={1080}
+                                    height={1080}
+                                    className="w-48 h-24 rounded-md object-cover"
+                                  />
+
+                                  <div className="flex flex-col gap-1">
+                                    <h2 className=" font-semibold tracking-tight">
+                                      {album.name}.
+                                    </h2>
+                                    <p className="text-sm text-muted-foreground">{album.artist}</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                     <TabsContent
